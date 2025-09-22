@@ -1,15 +1,14 @@
-# Gitignore
+# .gitignore
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 .env
 .venv/
 venv/
 .env.*
-instance/
 *.sqlite3
 *.db
-dist/
-build/
 .DS_Store
 .idea/
 .vscode/
