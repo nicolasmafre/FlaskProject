@@ -1,0 +1,15 @@
+# Gitignore
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
+.env.*
+instance/
+*.sqlite3
+*.db
+dist/
+build/
+.DS_Store
+.idea/
+.vscode/

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block head %}{% endblock %}
+{% block title %}Calculádora IMC{% endblock %}
+
+{% block content %}
+    <div>
+        <h1>Calculádora IMC</h1>
+        <form action="/" method="POST">
+            <label for="peso">Digite o Peso:</label>
+            <input type="number" name="peso" id="peso" step="0.1" min="1" autofocus required />
+            <label for="altura">Digite a Altura:</label>
+            <input type="number" name="altura" id="altura" step="0.01" min="0.3" required />
+            <input type="submit" value="Calcular" />
+        </form>
+        {% if erro %}
+            <p style="color: red;">{{ erro }}</p>
+        {% endif %}
+
+        {% if imc is not none %}
+            <p>Seu IMC é: <strong>{{ "%.2f"|format(imc) }}</strong>- {{ categoria }}</p>
+        {% endif %}
+    </div>
+{% endblock %}
