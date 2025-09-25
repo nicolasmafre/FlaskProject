@@ -8,17 +8,20 @@
         <h1>Calculádora IMC</h1>
         <form action="/" method="POST">
             <label for="peso">Digite o Peso:</label>
-            <input type="number" name="peso" id="peso" step="0.1" min="1" autofocus required />
+            <input type="number" name="peso" id="peso" step="0.01" min="1.5" autofocus required />
             <label for="altura">Digite a Altura:</label>
-            <input type="number" name="altura" id="altura" step="0.01" min="0.3" required />
+            <input type="number" name="altura" id="altura" step="0.01" min="0.25" required />
+            <label for="crianca">É criança:</label>
+            <input type="checkbox" name="crianca" id="crianca" />
             <input type="submit" value="Calcular" />
         </form>
         {% if erro %}
-            <p style="color: red;">{{ erro }}</p>
+            <p style="color: #ff0101;">{{ erro }}</p>
         {% endif %}
 
         {% if imc is not none %}
-            <p>Seu IMC é: <strong>{{ "%.2f"|format(imc) }}</strong>- {{ categoria }}</p>
+            <p>Seu IMC é: <strong>{{ "%.2f"|format(imc|float) }}</strong> ({{ categoria }})</p>
+            <p>Seu peso ideal é {{ "%.2f"|format(peso_ideal|float) }}</p>
         {% endif %}
     </div>
 {% endblock %}

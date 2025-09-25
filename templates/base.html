@@ -1,17 +1,25 @@
+<!-- Identificação do tipo de documento -->
 <!DOCTYPE html>
+<!-- Início do HTML e definição da língua utilizada no documento -->
 <html lang="pt-br">
+    <!-- Cabeçalho da página -->
     <head>
+        <!-- Conteúdo do cabeçalho -->
         {% block head %}
             <meta charset="UTF-8">
+
         {% endblock %}
+        <!-- Título da página -->
         <title>{% block title %}{% endblock %}</title>
     </head>
+    <!-- Corpo da página -->
     <body>
+        <!-- Conteúdo do corpo da página -->
         {% block content %}{% endblock %}
     </body>
+    <!-- Rodapé da página -->
     <footer>
-        {% block footer %}
-            {% block script %}{% endblock %}
-        {% endblock %}
+        Nícolas M. Freitas - <a href="mailto:nicolasmafre@gmail.com">nicolasmafre@gmail.com</a>
+        {% block script %}{% endblock %}
     </footer>
 </html>

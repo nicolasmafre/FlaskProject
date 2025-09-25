@@ -14,53 +14,66 @@ app = Flask(__name__)
 # - POST: processa o envio do formulário e calcula o IMC
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    # Se o método for POST, processamos os dados submetidos pelo formulário
-    if request.method == 'POST':
-        erro = None  # variável para armazenar mensagens de erro (se houver)
-        try:
-            # Lê os campos enviados com o formulário.
-            # Troca vírgula por ponto para permitir "1,75" além de "1.75".
-            peso = float(request.form.get('peso', '').replace(',', '.'))
-            altura = float(request.form.get('altura', '').replace(',', '.'))
+    # GET: exibe o formulário limpo ou com resultado passado por querystring (após PRG)
+    if request.method == 'GET':
+        imc = request.args.get('imc', None)
+        categoria = request.args.get('categoria', None)
+        peso_ideal = request.args.get('peso_ideal', None)
+        erro = request.args.get('erro', None)
+        return render_template('index.html', imc=imc, categoria=categoria, peso_ideal=peso_ideal, erro=erro)
 
-            # Validação básica: não aceitar zero ou valores negativos.
-            if peso <= 0 or altura <= 0:
-                erro = "Peso e altura devem ser valores positivos."
-            else:
-                # Cálculo do IMC: peso (kg) dividido pela altura (m) ao quadrado.
-                imc = peso / (altura ** 2)
+    # POST
+    imc = request.args.get('imc')
+    categoria = request.args.get('categoria')
+    peso_ideal = request.args.get('peso_ideal')
+    erro = request.args.get('erro')
 
-                # Classificação segundo faixas usuais para adultos.
-                if imc < 18.5:
-                    categoria = "Abaixo do peso"
-                elif imc < 25:
-                    categoria = "Peso normal"
-                elif imc < 30:
-                    categoria = "Sobrepeso"
-                elif imc < 35:
-                    categoria = "Obesidade I"
-                elif imc < 40:
-                    categoria = "Obesidade II"
-                else:
-                    categoria = "Obesidade III"
+    # POST: processa os dados do formulário
+    try:
+        # Não use variáveis antes de definir (corrige o problema da linha 19)
+        peso_str = request.form.get('peso', '').replace(',', '.')
+        altura_str = request.form.get('altura', '').replace(',', '.')
+        crianca = request.form.get('crianca')
 
-                # Renderiza o template já com resultado e sem erro.
-                return render_template('index.html', imc=imc, categoria=categoria, erro=None)
+        peso = float(peso_str) if peso_str else 0.0
+        altura = float(altura_str) if altura_str else 0.0
 
-        except ValueError:
-            # Captura erro de conversão (ex.: campo vazio ou texto inválido)
-            erro = "Informe números válidos (use ponto ou vírgula para decimais)."
+        if peso <= 0 or altura <= 0:
+            # Em caso de erro, redireciona para GET com mensagem (PRG)
+            return redirect(url_for('index', erro="Peso e altura devem ser valores positivos."))
 
-        # Em caso de erro de validação/conversão, renderiza template informando a mensagem.
-        return render_template('index.html', imc=None, categoria=None, erro=erro)
+        # Se houver lógica específica para 'crianca', trate aqui. Caso contrário, segue cálculo padrão.
+        imc = peso / (altura ** 2)
 
-    # Se for GET, apenas exibe a página inicial com variáveis nulas (sem resultado ainda).
-    return render_template('index.html', imc=None, categoria=None, erro=None)
+        if imc < 16:
+            categoria = "Magreza (Desnutrição)"
+        elif imc < 16.9:
+            categoria = "Magreza (Moderada)"
+        elif imc < 18.5:
+            categoria = "Magreza (Leve)"
+        elif imc < 25:
+            categoria = "Peso normal"
+        elif imc < 30:
+            categoria = "Sobrepeso"
+        elif imc < 35:
+            categoria = "Obesidade I"
+        elif imc < 40:
+            categoria = "Obesidade II (Severa)"
+        else:
+            categoria = "Obesidade III (Mórbida)"
 
-# Rota opcional "/home": faz um redirecionamento para a rota principal "/"
-@app.route('/home')
-def home():
-    return redirect(url_for('index'))
+        peso_ideal = 22 * (altura ** 2)
+
+        # PRG: redireciona para GET na mesma rota, evitando reenvio do formulário
+        # e “persistência” indesejada ao atualizar a página.
+        return redirect(url_for('index',
+                                imc=f"{imc:.2f}",
+                                categoria=categoria,
+                                peso_ideal=f"{peso_ideal:.2f}",
+                                erro=None))
+    except ValueError:
+        return redirect(url_for('index', erro="Informe números válidos (use ponto ou vírgula para decimais)."))
+
 
 # Ponto de entrada da aplicação.
 # Executa o servidor de desenvolvimento do Flask com:
