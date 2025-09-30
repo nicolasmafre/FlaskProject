@@ -14,6 +14,7 @@ app = Flask(__name__)
 # - POST: processa o envio do formulário e calcula o IMC
 @app.route('/', methods=['GET', 'POST'])
 def index():
+
     # GET: exibe o formulário limpo ou com resultado passado por querystring (após PRG)
     if request.method == 'GET':
         imc = request.args.get('imc', None)
@@ -81,4 +82,5 @@ def index():
 # - port: porta (inteiro)
 # - debug=True: recarrega automaticamente e mostra tracebacks detalhados
 if __name__ == '__main__':
+    print("Iniciando servidor de desenvolvimento...")
     app.run(host='127.0.0.1', port=8080, debug=True)

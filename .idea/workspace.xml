@@ -60,7 +60,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/nicolas/PycharmProjects/controle-estoque/app.py&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/nicolas/PycharmProjects/controle-estoque/templates/base.html&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -109,7 +109,8 @@
       <workItem from="1758622529948" duration="473000" />
       <workItem from="1758628864137" duration="12133000" />
       <workItem from="1758709494227" duration="6469000" />
-      <workItem from="1758796069280" duration="4483000" />
+      <workItem from="1758796069280" duration="16128000" />
+      <workItem from="1759233010195" duration="766000" />
     </task>
     <task id="LOCAL-00001" summary="Calculadora IMC">
       <option name="closed" value="true" />

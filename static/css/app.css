@@ -1,7 +1,9 @@
 :root {
-    --fundo-index: #dfd3c5;
+    --fundo-index: #f3dcc3;
+    --fonte-normal: #04133c;
 }
 
 body {
     background: var(--fundo-index);
+    color: var(--fonte-normal);
 }
